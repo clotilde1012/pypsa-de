@@ -1,0 +1,91 @@
+# Snakemake profile for bwUniCluster 2.0 (KIT)
+# Docs: https://wiki.bwhpc.de/e/BwUniCluster_2.0_Slurm_common_use
+
+executor: slurm
+
+# Number of simultaneously submitted SLURM jobs
+jobs: 50
+
+# Wait for filesystem to sync after job finishes (NFS latency on bwUniCluster)
+latency-wait: 120
+
+# Retry failed jobs once (e.g. due to transient filesystem issues)
+retries: 1
+
+# Rerun incomplete output files from previous runs
+rerun-incomplete: true
+
+# Keep going with other jobs if one fails
+keep-going: true
+
+# Default resources for all rules
+default-resources:
+  slurm_partition: single
+  slurm_account: YOUR_PROJECT_ACCOUNT   # <-- dein bwUniCluster Projekt-Account eintragen
+  mem_mb: 8000
+  runtime: 60   # minutes
+  tasks: 1
+  cpus_per_task: 4
+
+# Per-rule resource overrides
+set-resources:
+
+  # --- Preprocessing rules (light) ---
+  build_shapes:
+    mem_mb: 8000
+    runtime: 30
+    cpus_per_task: 2
+
+  build_base_network:
+    mem_mb: 8000
+    runtime: 30
+    cpus_per_task: 2
+
+  build_renewable_profiles:
+    mem_mb: 32000
+    runtime: 120
+    cpus_per_task: 4
+
+  build_clustered_population_layouts:
+    mem_mb: 16000
+    runtime: 60
+    cpus_per_task: 2
+
+  simplify_network:
+    mem_mb: 16000
+    runtime: 60
+    cpus_per_task: 4
+
+  cluster_network:
+    mem_mb: 32000
+    runtime: 120
+    cpus_per_task: 4
+
+  prepare_network:
+    mem_mb: 16000
+    runtime: 60
+    cpus_per_task: 4
+
+  add_electricity:
+    mem_mb: 16000
+    runtime: 60
+    cpus_per_task: 4
+
+  # --- Solve rules (heavy) ---
+  solve_network:
+    # 246 nodes electricity-only: ~80-150 GB RAM, 8-16 h
+    mem_mb: 200000
+    runtime: 960        # 16 h
+    cpus_per_task: 20
+    slurm_partition: single
+
+  solve_sector_network:
+    # 246 nodes sector-coupled: ~200+ GB RAM, 24+ h → fat partition
+    mem_mb: 400000
+    runtime: 1440       # 24 h
+    cpus_per_task: 20
+    slurm_partition: fat
+
+# Snakemake output settings
+printshellcmds: false
+show-failed-logs: true
