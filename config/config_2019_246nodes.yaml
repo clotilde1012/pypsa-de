@@ -16,7 +16,7 @@ remote:
 # docs in https://pypsa-eur.readthedocs.io/en/latest/configuration.html#run
 run:
   prefix: ""
-  name: "2019_validation_246nodes"
+  name: "2019_validation_246nodes_opsd"
   scenarios:
     enable: false
     file: config/scenarios.yaml
@@ -96,7 +96,7 @@ electricity:
     Store: [] #battery, H2
     Link: [] # H2 pipeline
 
-  powerplants_filter: "(DateOut > 2019 or DateOut != DateOut) and (DateIn < 2020 or DateIn != DateIn)"
+  powerplants_filter: not (DateOut < 2019)
   custom_powerplants: false
   everywhere_powerplants: []
 
@@ -111,13 +111,13 @@ electricity:
   - hydro
   estimate_renewable_capacities:
     enable: true
-    from_powerplantmatching: true
-    from_irenastat: false
+    # from_powerplantmatching: false
+    # from_irenastat: false
+    from_opsd: true
     year: 2019
     expansion_limit: false
-    
     technology_mapping:
-      Offshore: "offwind-ac" #hat nciht funktioniert mit offwind - ist default auch so 
+      Offshore: "offwind-ac"
       Onshore: onwind
       PV: solar
   estimate_battery_capacities: false
@@ -376,7 +376,7 @@ links:
 
 # docs in https://pypsa-eur.readthedocs.io/en/latest/configuration.html#transmission_projects
 transmission_projects:
-  enable: true
+  enable: false
   include:
     nep: true
     manual: true
@@ -609,7 +609,7 @@ sector:
   ICE_upper_degree_factor: 1.6
   EV_lower_degree_factor: 0.98
   EV_upper_degree_factor: 0.63
-  bev_dsm: 2030 #bei marie true 
+  bev_dsm: false
   bev_dsm_availability: 0.5
   bev_energy: 0.05
   bev_charge_efficiency: 0.9
@@ -749,8 +749,8 @@ sector:
     2050: 250
   co2_sequestration_cost: 30
   co2_sequestration_lifetime: 50
-  co2_spatial: true
-  co2_network: true
+  co2_spatial: false
+  co2_network: false
   co2_network_cost_factor: 1
   cc_fraction: 0.9
   hydrogen_underground_storage: true
@@ -766,11 +766,11 @@ sector:
     methanol_to_power:
       ccgt: false
       ccgt_cc: false
-      ocgt: true
+      ocgt: false
       allam: false
-    biomass_to_methanol: true
+    biomass_to_methanol: false
     biomass_to_methanol_cc: false
-  ammonia: true
+  ammonia: false
   min_part_load_electrolysis: 0
   min_part_load_fischer_tropsch: 0.5
   min_part_load_methanolisation: 0.3
@@ -802,7 +802,7 @@ sector:
       compression_per_1000km: 0.01
     electricity distribution grid:
       efficiency_static: 0.97
-  H2_network: true
+  H2_network: false
   gas_network: false
   regional_gas_demand: false
   H2_retrofit: false
@@ -980,7 +980,7 @@ costs:
 
 # docs in https://pypsa-eur.readthedocs.io/en/latest/configuration.html#clustering
 clustering:
-  mode: busmap #custom_busmap wenn schon nc.datei
+  mode: busmap
   administrative:
     level: 1
     countries: {}
