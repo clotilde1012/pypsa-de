@@ -16,7 +16,7 @@ remote:
 # docs in https://pypsa-eur.readthedocs.io/en/latest/configuration.html#run
 run:
   prefix: ""
-  name: "2019_validation_246nodes_ppm071"
+  name: "2019_validation_200nodes_ppm071"
   scenarios:
     enable: false
     file: config/scenarios.yaml
@@ -34,7 +34,7 @@ foresight: overnight
 # Wildcard docs in https://pypsa-eur.readthedocs.io/en/latest/wildcards.html
 scenario:
   clusters:
-  - 246 #  246 nodes for DE – within Frysztacki (2020) valid range of 150–280
+  - 200 #  246 nodes for DE – within Frysztacki (2020) valid range of 150–280
   opts:
   - ''
   sector_opts:
@@ -112,8 +112,9 @@ electricity:
   - hydro
   estimate_renewable_capacities:
     enable: true
-    from_powerplantmatching: false
-    from_irenastat: true
+    from_ospd: true 
+    from_powerplantmatching: true
+    from_irenastat: false
     year: 2019
     expansion_limit: false
     technology_mapping:
