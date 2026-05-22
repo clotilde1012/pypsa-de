@@ -16,7 +16,7 @@ remote:
 # docs in https://pypsa-eur.readthedocs.io/en/latest/configuration.html#run
 run:
   prefix: ""
-  name: "2030_simulation_246nodes"
+  name: "2030_simulation_246nodes_ppm071"
   scenarios:
     enable: false
     file: config/scenarios.yaml
@@ -111,7 +111,7 @@ electricity:
   - hydro
   estimate_renewable_capacities:
     enable: true
-    from_powerplantmatching: true
+    from_powerplantmatching: false
     from_irenastat: true
     year: 2023
     expansion_limit: false
@@ -800,7 +800,7 @@ sector:
       compression_per_1000km: 0.01
     electricity distribution grid:
       efficiency_static: 0.97
-  H2_network: true
+  H2_network: false
   gas_network: false
   regional_gas_demand: false
   H2_retrofit: false
@@ -1293,8 +1293,8 @@ data:
     source: archive
     version: latest
   powerplants:
-    source: archive
-    version: latest
+    source: primary
+    version: "0.7.1"
   # costs: #wegen error 
   #   source: archive
   #   version: latest
@@ -1318,7 +1318,7 @@ data:
     version: latest
   cutout:
     source: archive
-    version: latest
+    version: v1.0
   dh_areas:
     source: archive
     version: latest
