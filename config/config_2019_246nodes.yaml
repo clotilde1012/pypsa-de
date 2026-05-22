@@ -22,7 +22,7 @@ run:
     file: config/scenarios.yaml
   disable_progressbar: false
   shared_resources:
-    policy: "2019_validation_200nodes_ppm071"
+    policy: false
     exclude: []
   shared_cutouts: true
   use_shadow_directory: true # Set to false if problems regarding missing directories occur
@@ -424,7 +424,7 @@ biomass:
     - Sludge
     municipal solid waste:
     - Municipal waste
-  share_unsustainable_use_retained:
+  share_unsustainable_use_retained: #marieswerte
     2020: 1
     2025: 1
     2030: 0.66
@@ -432,7 +432,7 @@ biomass:
     2040: 0
     2045: 0
     2050: 0
-  share_sustainable_potential_available:
+  share_sustainable_potential_available: #maries werte
     2020: 0
     2025: 0
     2030: 0.33
@@ -691,6 +691,7 @@ sector:
   SMR: true
   SMR_cc: true
   regional_oil_demand: false
+  regional_gas_demand: false
   regional_coal_demand: false
   regional_co2_sequestration_potential:
     enable: false
